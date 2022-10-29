@@ -6,11 +6,8 @@
 
 # User-specific files
 
-<<<<<<< HEAD
-.vs
-=======
+
 *.vs
->>>>>>> testtest1
 
 
 *.suo
