@@ -31,11 +31,11 @@ namespace HelloApp
 
                 for (int i = 0; i < 10; i++)
                 {
-                    Console.WriteLine("1) Äîáàâèòü");
-                    Console.WriteLine("2) Óäàëèòü");
-                    Console.WriteLine("3) Èçìåíèòü");
-                    Console.WriteLine("4) Ïîêàçàòü");
-                    Console.WriteLine("5) Ïî÷èñòèòü êîíñîëü\n");
+                    Console.WriteLine("1) Ð”Ð¾Ð±Ð°Ð²Ð¸Ñ‚ÑŒ");
+                    Console.WriteLine("2) Ð£Ð´Ð°Ð»Ð¸Ñ‚ÑŒ");
+                    Console.WriteLine("3) Ð˜Ð·Ð¼ÐµÐ½Ð¸Ñ‚ÑŒ");
+                    Console.WriteLine("4) ÐŸÐ¾ÐºÐ°Ð·Ð°Ñ‚ÑŒ");
+                    Console.WriteLine("5) ÐŸÐ¾Ñ‡Ð¸ÑÑ‚Ð¸Ñ‚ÑŒ ÐºÐ¾Ð½ÑÐ¾Ð»ÑŒ\n");
 
                     try
                     {
@@ -47,11 +47,11 @@ namespace HelloApp
                             case 1:
                                 try
                                 {
-                                    Console.Write("Ââåäèòå èìÿ ");
+                                    Console.Write("Ð’Ð²ÐµÐ´Ð¸Ñ‚Ðµ Ð¸Ð¼Ñ ");
 
                                     string name = Console.ReadLine();
 
-                                    Console.Write("Âåäèòå âîçðàñò ");
+                                    Console.Write("Ð’ÐµÐ´Ð¸Ñ‚Ðµ Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚ ");
 
                                     int age = Convert.ToInt32(Console.ReadLine());
 
@@ -61,17 +61,17 @@ namespace HelloApp
                                 }
                                 catch (Exception)
                                 {
-                                    Console.WriteLine("Íå âåðíûé ôîðìàò\n");
+                                    Console.WriteLine("ÐÐµ Ð²ÐµÑ€Ð½Ñ‹Ð¹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚\n");
                                 }
                                 break;
                             case 2:
-                                Console.Write("Âûáåðåòå id");
+                                Console.Write("Ð’Ñ‹Ð±ÐµÑ€ÐµÑ‚Ðµ id");
                                 int id = Convert.ToInt32(Console.ReadLine());
 
                                 DelateUser(id);
                                 break;
                             case 3:
-                                Console.Write("Âûáåðåòå id ");
+                                Console.Write("Ð’Ñ‹Ð±ÐµÑ€ÐµÑ‚Ðµ id ");
                                 int id2 = Convert.ToInt32(Console.ReadLine());
 
                                 ChangeUser(id2);
@@ -83,13 +83,13 @@ namespace HelloApp
                                 Console.Clear();
                                 break;
                             default:
-                                Console.WriteLine("Âûáåðåòå ñóùåñòâóþùèé âàðèíàò\n");
+                                Console.WriteLine("Ð’Ñ‹Ð±ÐµÑ€ÐµÑ‚Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð²Ð°Ñ€Ð¸Ð½Ð°Ñ‚\n");
                                 break;
                         }
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("Âûáåðåòå ñóùåñòâóþùèé âàðèíàò\n");
+                        Console.WriteLine("Ð’Ñ‹Ð±ÐµÑ€ÐµÑ‚Ðµ ÑÑƒÑ‰ÐµÑÑ‚Ð²ÑƒÑŽÑ‰Ð¸Ð¹ Ð²Ð°Ñ€Ð¸Ð½Ð°Ñ‚\n");
                     }
                 }
             }
@@ -106,7 +106,7 @@ namespace HelloApp
 
                 foreach (User u in users)
                 {
-                    Console.WriteLine($"Id: {u.Id}. Èìÿ: {u.Name}. Âîçðàñò: {u.Age}");
+                    Console.WriteLine($"Id: {u.Id}. Ð˜Ð¼Ñ: {u.Name}. Ð’Ð¾Ð·Ñ€Ð°ÑÑ‚: {u.Age}");
                 }
                 Console.WriteLine();
             }
@@ -138,7 +138,7 @@ namespace HelloApp
                 }
                 else
                 {
-                    Console.WriteLine($"Íåò äàííûõ ïîä Id: {id}\n");
+                    Console.WriteLine($"ÐÐµÑ‚ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ð¾Ð´ Id: {id}\n");
                 }
             }
 
@@ -151,28 +151,28 @@ namespace HelloApp
                 {
                     try
                     {
-                        Console.Write("Èçìåíåíèå èìåíè íà: ");
+                        Console.Write("Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ Ð¸Ð¼ÐµÐ½Ð¸ Ð½Ð°: ");
                         string newName = Console.ReadLine();
 
-                        Console.Write("Èçìåíåíèå âîçðàñòà íà: ");
+                        Console.Write("Ð˜Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ðµ Ð²Ð¾Ð·Ñ€Ð°ÑÑ‚Ð° Ð½Ð°: ");
 
                         int newAge = Convert.ToInt32(Console.ReadLine());
 
                         user1.Name = newName;
                         user1.Age = newAge;
-                        //îáíîâëÿåì îáúåêò
+                        //Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð¾Ð±ÑŠÐµÐºÑ‚
                         //db.Users.Update(user);
                         db.SaveChanges();
 
                     }
                     catch (Exception)
                     {
-                        Console.WriteLine("Íå âåðíûé ôîðìàò äàííûõ!\n");
+                        Console.WriteLine("ÐÐµ Ð²ÐµÑ€Ð½Ñ‹Ð¹ Ñ„Ð¾Ñ€Ð¼Ð°Ñ‚ Ð´Ð°Ð½Ð½Ñ‹Ñ…!\n");
                     }
                 }
                 else
                 {
-                        Console.WriteLine($"Íåò äàííûõ ïî Id: {id}\n");
+                        Console.WriteLine($"ÐÐµÑ‚ Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿Ð¾ Id: {id}\n");
                 }
             }
         }
