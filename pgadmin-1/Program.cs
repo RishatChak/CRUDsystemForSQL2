@@ -102,11 +102,11 @@ namespace HelloApp
             static void CreateUser()
             {
                 Console.Clear();
-                Console.Write("Введите имя ");
+                Console.Write("Введите имя: ");
 
                 string name = Console.ReadLine();
 
-                Console.Write("Ведите возраст ");
+                Console.Write("Ведите возраст: ");
 
                 int age = Convert.ToInt32(Console.ReadLine());
 
@@ -124,7 +124,7 @@ namespace HelloApp
             static void DeleteUser()
             {
                 Console.Clear();
-                Console.Write("Выберете id ");
+                Console.Write("Выберете id: ");
                 int id = Convert.ToInt32(Console.ReadLine());
 
                 using ApplicationContext db = new ApplicationContext();
@@ -145,7 +145,7 @@ namespace HelloApp
             static void ChangeUser()
             {
                 Console.Clear();
-                Console.Write("Выберете id ");
+                Console.Write("Выберете id: ");
                 int id = Convert.ToInt32(Console.ReadLine());
 
                 using ApplicationContext db = new ApplicationContext();
