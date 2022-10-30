@@ -32,54 +32,31 @@ namespace HelloApp
                 {
                     try
                     {
-                        Console.WriteLine("1) Добавить");
-                        Console.WriteLine("2) Удалить");
-                        Console.WriteLine("3) Изменить");
-                        Console.WriteLine("4) Показать");
-                        Console.WriteLine("5) Почистить консоль");
-                        Console.WriteLine("6) Выйти из программы\n");
+                        ShowMenu();
 
                         int? option = Convert.ToInt32(Console.ReadLine());
 
                         switch (option)
                         {
                             case 1:
-                                Console.Write("Введите имя ");
-
-                                string name = Console.ReadLine();
-
-                                Console.Write("Ведите возраст ");
-
-                                int age = Convert.ToInt32(Console.ReadLine());
-
-                                CreateUser(age, name);
+                                CreateUser();
 
                                 Console.WriteLine();
                                 break;
 
                             case 2:
-                                Console.Write("Выберете id");
-                                int id = Convert.ToInt32(Console.ReadLine());
-
-                                DelateUser(id);
+                                DeleteUser();
                                 break;
 
                             case 3:
-                                Console.Write("Выберете id ");
-                                int id2 = Convert.ToInt32(Console.ReadLine());
-
-                                ChangeUser(id2);
+                                ChangeUser();
                                 break;
 
                             case 4:
-                                ShowUser();
+                                ShowUsers();
                                 break;
-
+                                                            
                             case 5:
-                                Console.Clear();
-                                break;
-
-                            case 6:
                                 exitProgram = false;
                                 break;
 
@@ -96,8 +73,19 @@ namespace HelloApp
                 }
             }
 
-            static void ShowUser()
+            static void ShowMenu()
             {
+                Console.WriteLine("1) Добавить");
+                Console.WriteLine("2) Удалить");
+                Console.WriteLine("3) Изменить");
+                Console.WriteLine("4) Показать");
+                Console.WriteLine("5) Выйти из программы\n");
+            }
+
+            static void ShowUsers()
+            {
+                Console.Clear();
+
                 using ApplicationContext db = new ApplicationContext();
 
                 var users = db.Users.ToList();
@@ -111,8 +99,17 @@ namespace HelloApp
                 Console.WriteLine();
             }
 
-            static void CreateUser(int age, string name)
+            static void CreateUser()
             {
+                Console.Clear();
+                Console.Write("Введите имя ");
+
+                string name = Console.ReadLine();
+
+                Console.Write("Ведите возраст ");
+
+                int age = Convert.ToInt32(Console.ReadLine());
+
                 using ApplicationContext db = new ApplicationContext();
                 User user = new User();
                 user.Name = name;
@@ -124,11 +121,15 @@ namespace HelloApp
             }
 
 
-            static void DelateUser(int id)
+            static void DeleteUser()
             {
+                Console.Clear();
+                Console.Write("Выберете id ");
+                int id = Convert.ToInt32(Console.ReadLine());
+
                 using ApplicationContext db = new ApplicationContext();
 
-                User user = db.Users.Find(id);
+                User? user = db.Users.FirstOrDefault(p => p.Id == id);
 
                 if (user != null)
                 {
@@ -141,12 +142,17 @@ namespace HelloApp
                 }
             }
 
-            static void ChangeUser(int id)
+            static void ChangeUser()
             {
-                using ApplicationContext db = new ApplicationContext();
-                User user1 = db.Users.Find(id);
+                Console.Clear();
+                Console.Write("Выберете id ");
+                int id = Convert.ToInt32(Console.ReadLine());
 
-                if (user1 != null)
+                using ApplicationContext db = new ApplicationContext();
+                User? user = db.Users.FirstOrDefault(p => p.Id == id);
+
+
+                if (user != null)
                 {
                     try
                     {
@@ -157,8 +163,8 @@ namespace HelloApp
 
                         int newAge = Convert.ToInt32(Console.ReadLine());
 
-                        user1.Name = newName;
-                        user1.Age = newAge;
+                        user.Name = newName;
+                        user.Age = newAge;
                         //обновляем объект
                         //db.Users.Update(user);
                         db.SaveChanges();
