@@ -21,80 +21,80 @@ public class ApplicationContext : DbContext
 
 namespace HelloApp
 {
-
     namespace HelloApp
     {
         class Program
         {
             static void Main(string[] args)
             {
-
-                for (int i = 0; i < 10; i++)
+                bool exitProgram = true;
+                while (exitProgram)
                 {
-                    Console.WriteLine("1) Добавить");
-                    Console.WriteLine("2) Удалить");
-                    Console.WriteLine("3) Изменить");
-                    Console.WriteLine("4) Показать");
-                    Console.WriteLine("5) Почистить консоль\n");
-
                     try
                     {
+                        Console.WriteLine("1) Добавить");
+                        Console.WriteLine("2) Удалить");
+                        Console.WriteLine("3) Изменить");
+                        Console.WriteLine("4) Показать");
+                        Console.WriteLine("5) Почистить консоль");
+                        Console.WriteLine("6) Выйти из программы\n");
+
                         int? option = Convert.ToInt32(Console.ReadLine());
 
                         switch (option)
                         {
-
                             case 1:
-                                try
-                                {
-                                    Console.Write("Введите имя ");
+                                Console.Write("Введите имя ");
 
-                                    string name = Console.ReadLine();
+                                string name = Console.ReadLine();
 
-                                    Console.Write("Ведите возраст ");
+                                Console.Write("Ведите возраст ");
 
-                                    int age = Convert.ToInt32(Console.ReadLine());
+                                int age = Convert.ToInt32(Console.ReadLine());
 
-                                    CreateUser(age, name);
+                                CreateUser(age, name);
 
-                                    Console.WriteLine();
-                                }
-                                catch (Exception)
-                                {
-                                    Console.WriteLine("Не верный формат\n");
-                                }
+                                Console.WriteLine();
                                 break;
+
                             case 2:
                                 Console.Write("Выберете id");
                                 int id = Convert.ToInt32(Console.ReadLine());
 
                                 DelateUser(id);
                                 break;
+
                             case 3:
                                 Console.Write("Выберете id ");
                                 int id2 = Convert.ToInt32(Console.ReadLine());
 
                                 ChangeUser(id2);
                                 break;
+
                             case 4:
                                 ShowUser();
                                 break;
+
                             case 5:
                                 Console.Clear();
                                 break;
+
+                            case 6:
+                                exitProgram = false;
+                                break;
+
                             default:
                                 Console.WriteLine("Выберете существующий варинат\n");
                                 break;
                         }
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        Console.WriteLine("Выберете существующий варинат\n");
+
+                        Console.WriteLine($"Произошла ошибка: {ex.Message}");
                     }
                 }
             }
-
-
 
             static void ShowUser()
             {
@@ -121,7 +121,6 @@ namespace HelloApp
                 db.Users.Add(user);
                 db.SaveChanges();
                 Console.WriteLine();
-
             }
 
 
