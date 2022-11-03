@@ -27,159 +27,191 @@ namespace HelloApp
         {
             static void Main(string[] args)
             {
+                IDataProcessor dataProcessor = new ConsoleProccesor();
+                dataProcessor.ShowMenuCradAndStartProgram(new ShowMenuCRUD());
+            }
+            
+            interface IDatatProvider
+            {
+                void CRUDSystem();
+            }
+
+            interface IDataProcessor
+            {
+                void ShowMenuCradAndStartProgram(IDatatProvider forCRUD);
+            }
+
+            class ShowMenuCRUD : IDataProcessor, IDatatProvider
+            {
+                IDataProcessor dataProcessor = new ConsoleProccesor();
+
                 bool exitProgram = true;
-                while (exitProgram)
+
+                public void CRUDSystem()
                 {
-                    try
+                    while (exitProgram)
                     {
-                        ShowMenu();
-
-                        int? option = Convert.ToInt32(Console.ReadLine());
-
-                        switch (option)
+                        try
                         {
-                            case 1:
-                                CreateUser();
+                            Console.WriteLine("1) Добавить\n2) Удалить\n3) Изменить\n4) Показать\n5) Выйти из программы\n");
 
-                                Console.WriteLine();
-                                break;
+                            int? option = Convert.ToInt32(Console.ReadLine());
 
-                            case 2:
-                                DeleteUser();
-                                break;
+                            Console.Clear();
 
-                            case 3:
-                                ChangeUser();
-                                break;
+                            switch (option)
+                            {
+                                case 1:
+                                    dataProcessor.ShowMenuCradAndStartProgram(new CreateUserSQL());
 
-                            case 4:
-                                ShowUsers();
-                                break;
-                                                            
-                            case 5:
-                                exitProgram = false;
-                                break;
+                                    Console.WriteLine();
+                                    break;
 
-                            default:
-                                Console.WriteLine("Выберете существующий варинат\n");
-                                break;
+                                case 2:
+                                    dataProcessor.ShowMenuCradAndStartProgram(new DeleteUserSql());
+                                    break;
+
+                                case 3:
+                                    dataProcessor.ShowMenuCradAndStartProgram(new ChangeUserSql());
+                                    break;
+
+                                case 4:
+                                    dataProcessor.ShowMenuCradAndStartProgram(new ShowUsersForSQL());
+                                    break;
+
+                                case 5:
+                                    exitProgram = false;
+                                    break;
+
+                                default:
+                                    Console.WriteLine("Выберете существующий варинат\n");
+                                    break;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+
+                            Console.WriteLine($"Произошла ошибка: {ex.Message}");
                         }
                     }
-                    catch (Exception ex)
+                }
+
+                public void ShowMenuCradAndStartProgram(IDatatProvider forCRUD)
+                {
+                    throw new NotImplementedException();
+                }
+            }
+
+            class ConsoleProccesor : IDataProcessor
+            {
+                public void ShowMenuCradAndStartProgram(IDatatProvider forCRUD)
+                {
+                    forCRUD.CRUDSystem();
+                }
+            }            
+
+            class ShowUsersForSQL : IDatatProvider
+            {
+                public void CRUDSystem()
+                {
+                    using ApplicationContext db = new ApplicationContext();
+                    var users = db.Users.ToList();
+
+                    foreach (User u in users)
                     {
-
-                        Console.WriteLine($"Произошла ошибка: {ex.Message}");
+                        Console.WriteLine($"Id: {u.Id}. Имя: {u.Name}. Возраст: {u.Age}");
                     }
+                    Console.WriteLine();
                 }
             }
 
-            static void ShowMenu()
+            class CreateUserSQL : IDatatProvider
             {
-                Console.WriteLine("1) Добавить");
-                Console.WriteLine("2) Удалить");
-                Console.WriteLine("3) Изменить");
-                Console.WriteLine("4) Показать");
-                Console.WriteLine("5) Выйти из программы\n");
-            }
-
-            static void ShowUsers()
-            {
-                Console.Clear();
-
-                using ApplicationContext db = new ApplicationContext();
-
-                var users = db.Users.ToList();
-
-                Console.WriteLine("Users list:");
-
-                foreach (User u in users)
+                public void CRUDSystem()
                 {
-                    Console.WriteLine($"Id: {u.Id}. Имя: {u.Name}. Возраст: {u.Age}");
-                }
-                Console.WriteLine();
-            }
+                    Console.Write("Введите имя: ");
 
-            static void CreateUser()
-            {
-                Console.Clear();
-                Console.Write("Введите имя: ");
+                    string name = Console.ReadLine();
 
-                string name = Console.ReadLine();
+                    Console.Write("Ведите возраст: ");
 
-                Console.Write("Ведите возраст: ");
+                    int age = Convert.ToInt32(Console.ReadLine());
 
-                int age = Convert.ToInt32(Console.ReadLine());
+                    using ApplicationContext db = new ApplicationContext();
+                    User user = new User();
+                    user.Name = name;
+                    user.Age = age;
 
-                using ApplicationContext db = new ApplicationContext();
-                User user = new User();
-                user.Name = name;
-                user.Age = age;
-
-                db.Users.Add(user);
-                db.SaveChanges();
-                Console.WriteLine();
-            }
-
-
-            static void DeleteUser()
-            {
-                Console.Clear();
-                Console.Write("Выберете id: ");
-                int id = Convert.ToInt32(Console.ReadLine());
-
-                using ApplicationContext db = new ApplicationContext();
-
-                User? user = db.Users.FirstOrDefault(p => p.Id == id);
-
-                if (user != null)
-                {
-                    db.Users.Remove(user);
+                    db.Users.Add(user);
                     db.SaveChanges();
-                }
-                else
-                {
-                    Console.WriteLine($"Нет данных под Id: {id}\n");
+                    Console.WriteLine();
                 }
             }
 
-            static void ChangeUser()
+            class DeleteUserSql : IDatatProvider
             {
-                Console.Clear();
-                Console.Write("Выберете id: ");
-                int id = Convert.ToInt32(Console.ReadLine());
-
-                using ApplicationContext db = new ApplicationContext();
-                User? user = db.Users.FirstOrDefault(p => p.Id == id);
-
-
-                if (user != null)
+                public void CRUDSystem()
                 {
-                    try
+                    Console.Write("Выберете id: ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+
+                    using ApplicationContext db = new ApplicationContext();
+
+                    User? user = db.Users.FirstOrDefault(p => p.Id == id);
+
+                    if (user != null)
                     {
-                        Console.Write("Изменение имени на: ");
-                        string newName = Console.ReadLine();
-
-                        Console.Write("Изменение возраста на: ");
-
-                        int newAge = Convert.ToInt32(Console.ReadLine());
-
-                        user.Name = newName;
-                        user.Age = newAge;
-                        //обновляем объект
-                        //db.Users.Update(user);
+                        db.Users.Remove(user);
                         db.SaveChanges();
-
                     }
-                    catch (Exception)
+                    else
                     {
-                        Console.WriteLine("Не верный формат данных!\n");
+                        Console.WriteLine($"Нет данных под Id: {id}\n");
                     }
-                }
-                else
-                {
-                        Console.WriteLine($"Нет данных по Id: {id}\n");
                 }
             }
+
+            class ChangeUserSql : IDatatProvider
+            {
+                public void CRUDSystem()
+                {
+                    Console.Write("Выберете id: ");
+                    int id = Convert.ToInt32(Console.ReadLine());
+
+                    using ApplicationContext db = new ApplicationContext();
+                    User? user = db.Users.FirstOrDefault(p => p.Id == id);
+
+                    if (user != null)
+                    {
+                        try
+                        {
+                            Console.Write("Изменение имени на: ");
+                            string newName = Console.ReadLine();
+
+                            Console.Write("Изменение возраста на: ");
+
+                            int newAge = Convert.ToInt32(Console.ReadLine());
+
+                            user.Name = newName;
+                            user.Age = newAge;
+                            //обновляем объект
+                            //db.Users.Update(user);
+                            db.SaveChanges();
+
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("Не верный формат данных!\n");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Нет данных по Id: {id}\n");
+                    }
+                }
+            }
+
+            
         }
     }
 }
