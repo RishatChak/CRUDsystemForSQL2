@@ -2,7 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 
-
 public class User
 {
     public int Id { get; set; }
@@ -28,7 +27,7 @@ namespace HelloApp
             static void Main(string[] args)
             {
                 IDataProcessor dataProcessor = new ConsoleProccesor();
-                dataProcessor.ShowMenuCradAndStartProgram(new ShowMenuCRUD());
+                dataProcessor.ShowMenuCRUDAndStartProgram(new ShowMenuCRUD());
             }
             
             interface IDatatProvider
@@ -38,7 +37,7 @@ namespace HelloApp
 
             interface IDataProcessor
             {
-                void ShowMenuCradAndStartProgram(IDatatProvider forCRUD);
+                void ShowMenuCRUDAndStartProgram(IDatatProvider forCRUD);
             }
 
             class ShowMenuCRUD : IDataProcessor, IDatatProvider
@@ -62,21 +61,21 @@ namespace HelloApp
                             switch (option)
                             {
                                 case 1:
-                                    dataProcessor.ShowMenuCradAndStartProgram(new CreateUserSQL());
+                                    dataProcessor.ShowMenuCRUDAndStartProgram(new CreateUserSQL());
 
                                     Console.WriteLine();
                                     break;
 
                                 case 2:
-                                    dataProcessor.ShowMenuCradAndStartProgram(new DeleteUserSql());
+                                    dataProcessor.ShowMenuCRUDAndStartProgram(new DeleteUserSql());
                                     break;
 
                                 case 3:
-                                    dataProcessor.ShowMenuCradAndStartProgram(new ChangeUserSql());
+                                    dataProcessor.ShowMenuCRUDAndStartProgram(new ChangeUserSql());
                                     break;
 
                                 case 4:
-                                    dataProcessor.ShowMenuCradAndStartProgram(new ShowUsersForSQL());
+                                    dataProcessor.ShowMenuCRUDAndStartProgram(new ShowUsersForSQL());
                                     break;
 
                                 case 5:
@@ -96,7 +95,7 @@ namespace HelloApp
                     }
                 }
 
-                public void ShowMenuCradAndStartProgram(IDatatProvider forCRUD)
+                public void ShowMenuCRUDAndStartProgram(IDatatProvider forCRUD)
                 {
                     throw new NotImplementedException();
                 }
@@ -104,7 +103,7 @@ namespace HelloApp
 
             class ConsoleProccesor : IDataProcessor
             {
-                public void ShowMenuCradAndStartProgram(IDatatProvider forCRUD)
+                public void ShowMenuCRUDAndStartProgram(IDatatProvider forCRUD)
                 {
                     forCRUD.CRUDSystem();
                 }
